@@ -1,4 +1,4 @@
-# save to file and read from file, only can be logged into 1 user, oninit create name of ur username
+# save to file and read from file, only can be logged into 1 user, oninit create name of ur username nice
 
 class ircv2:
 
