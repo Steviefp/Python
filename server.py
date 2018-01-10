@@ -30,10 +30,13 @@ def clientThread(c,addr):
 
 
 
+
 while serverState:
+    print(serverState)
     c, addr = s.accept()
     connectionlist.append(c)
     t1=threading.Thread(target=clientThread, args=(c,addr))
+
     t1.start()
     print(t1)
 
@@ -41,3 +44,4 @@ while serverState:
 
 
 c.close()
+s.close()

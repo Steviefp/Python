@@ -24,7 +24,7 @@ def testingboy():
 
 
 while clientState:
-
+	print(clientState)
 	dope = threading.Thread(target=testingboy, args=())
 	dope.start()
 
@@ -34,5 +34,5 @@ while clientState:
 
 
 	#message = input("enter message -> ")
-
+print("closing client")
 s.close()
