@@ -8,9 +8,9 @@ port=25565
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.connect((host,port))
 '''socket information'''
-
+user_name=input("enter username: ")
+s.send("USER_NAME$$".encode()+user_name.encode())
 def obtain_string():
-
     information=s.recv(1024).decode('utf-8')
     print(str(information))
 

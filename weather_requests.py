@@ -1,9 +1,5 @@
 import requests
 
-
-
-
-
 zipcode=input("enter zip: ")
 key="05dc89dd3fd81bfcc393477e92a0e8d7"
 
