@@ -2,6 +2,8 @@ import discord
 import asyncio
 import requests
 import league_requests
+import league_wr
+import praw
 # zipcode and key are for requests for the weather api website
 zipcode,key='48164','05dc89dd3fd81bfcc393477e92a0e8d7'
 
@@ -12,7 +14,10 @@ client=discord.Client()
 timer=0
 timer_state=True
 
-#math functions
+#reddit bot
+reddit = praw.Reddit(client_id='6wT1IggpXMSgEw',
+                     client_secret='f90jNXEuumY9UfrrIWKD7X64j24',
+                     user_agent='description i believe')
 
 
 #Someone reason on_ready and on_message have to be called like that and can't be renamed.
@@ -28,7 +33,17 @@ async def on_message(message):
     global timer_state
 
 
+    if message.content.startswith('!reddit'):
+        sub=reddit.random_subreddit()
+        neat=0
 
+        for post in sub.new(limit=1):
+            neat=post.url
+        await client.send_message(message.channel, neat)
+
+
+    if message.content.startswith('!play'):
+        await client.send_message(message.channel, '<@165698419820724224> ''<@125029977404997632> ' '<@166315074821029888>')
 #tyler stopwatch/timer for when he leaves ocmputer
     if message.content.startswith("!start"):
         await client.send_message(message.channel,"Timer Started")
@@ -76,11 +91,20 @@ async def on_message(message):
 
     if message.content.startswith("!runes"):
         user_input=message.content[7:]
-        await client.send_message(message.channel,league_requests.nice(user_input))
+        rune_list=league_requests.nice(user_input)
+        await client.send_message(message.channel,"{0}, {1}, {2}, {3}, {4}, {5}".format(rune_list[0],rune_list[1],rune_list[2],rune_list[3],rune_list[4],rune_list[5]))
+
+    if message.content.startswith("!wr"):
+        message_vars=[]
+        for x in message.content.split():
+            message_vars.append(x)
+        print(message_vars)
+        ratio=league_wr.main(message_vars[1],message_vars[2])
+        await client.send_message(message.channel,str(ratio))
 
 #help command for servers
     if message.content.startswith("!help"):
-        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg")
+        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !reddit !play")
 
 
 

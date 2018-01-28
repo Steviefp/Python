@@ -1,17 +1,23 @@
 import requests
 def nice(user_name):
-    key='api_key=RGAPI-df4b4833-dbff-4e63-8e49-7a6669d7b015'
+    # This is riot api key
+    key='api_key=RGAPI-0a0ed530-0062-4aea-a99d-945976ecfec4'
+    # this is discord input
     user_name=user_name
+    # I grab from riot api summoners id from summoner name which is the user_name
     r=requests.get('https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/{0}?{1}'.format(user_name,key))
+    # ddragon runesReforged.json, this is my only way I could get rune names from rune id
     ddragon=requests.get("http://ddragon.leagueoflegends.com/cdn/8.2.1/data/en_US/runesReforged.json")
-    #print(r.json())
+
     summoner_id=r.json()['id']
     print(summoner_id)
 
+    # I change my request to spectator after I get the summoner Id.
     r=requests.get('https://na1.api.riotgames.com/lol/spectator/v3/active-games/by-summoner/{0}?{1}'.format(summoner_id,key))
 
-    #from league api
-    for counter in range(len(r.json()['participants'])):#could also just do enumerate without using second variable
+    # From riot api
+    # I use bunch of nested loops to get through all the json.
+    for counter in range(len(r.json()['participants'])): # could also just do enumerate without using second variable
         for x in r.json()['participants'][counter]:
             if r.json()['participants'][counter][x]==summoner_id:
                 rune_list=r.json()['participants'][counter]['perks']['perkIds']
@@ -31,6 +37,5 @@ def nice(user_name):
                 # print(ddragon.json()[x]['slots'][c]['runes'][g]['name'])
                 # print(ddragon.json()[x]['slots'][c]['runes'][g]['id'])
 
-    rune_name_order=[]
-    rune_name_order.append((rune_name[2],rune_name[3],rune_name[4],rune_name[5],rune_name[0],rune_name[1]))
-    return rune_name_order
+
+    return rune_name
