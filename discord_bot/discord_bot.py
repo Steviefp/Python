@@ -4,6 +4,7 @@ import requests
 import league_requests
 import league_wr
 import praw
+import league_summoner_wr
 # zipcode and key are for requests for the weather api website
 zipcode,key='48164','05dc89dd3fd81bfcc393477e92a0e8d7'
 
@@ -94,7 +95,7 @@ async def on_message(message):
         rune_list=league_requests.nice(user_input)
         await client.send_message(message.channel,"{0}, {1}, {2}, {3}, {4}, {5}".format(rune_list[0],rune_list[1],rune_list[2],rune_list[3],rune_list[4],rune_list[5]))
 
-    if message.content.startswith("!wr"):
+    if message.content.startswith("!wrchamp"):
         message_vars=[]
         for x in message.content.split():
             message_vars.append(x)
@@ -102,11 +103,18 @@ async def on_message(message):
         ratio=league_wr.main(message_vars[1],message_vars[2])
         await client.send_message(message.channel,str(ratio))
 
+    if message.content.startswith("!wr"):
+        message_wr_vars=[]
+        for x in message.content.split():
+            message_wr_vars.append(x)
+        await client.send_message(message.channel,str(league_summoner_wr.summoner_wr(message_wr_vars[1]).win_rate))
 #help command for servers
     if message.content.startswith("!help"):
-        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !reddit !play")
+        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !wrchamp !reddit !play")
 
 
 
 # discord client run key
-client.run('MzQ5MTg2MDMzMTkzMDU4MzA3.DH2RnA.6MWBaIx7TzO21vJRzFeYwsxgEE0')
+discord_token=''
+
+client.run(discord_token)
