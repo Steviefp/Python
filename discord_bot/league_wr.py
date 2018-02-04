@@ -3,28 +3,28 @@ import json
 import urllib.request
 
 
-key='api_key=RGAPI-18ad79b8-daac-4c0a-9a38-635784032428'
 
-def obtain_id(user_name):
+
+def obtain_id(user_name,key):
     user_name = user_name
-    account_request = requests.get('https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/{0}?{1}'.format(user_name, key))
+    account_request = requests.get('https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/{0}?api_key={1}'.format(user_name, key))
     account_id=account_request.json()['accountId']
     print(account_id)
     return account_id
 
-def obtain_champion(champion_name):
+def obtain_champion(champion_name,key):
     champion_name=champion_name
-    urllib.request.urlretrieve('https://na1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&dataById=false&%s'%key,"champions.json")
+    urllib.request.urlretrieve('https://na1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&dataById=false&api_key=%s'%key,"champions.json")
     champion_request=open("champions.json","r")
     champion_request=json.load(champion_request)
     champion_id=champion_request['data'][champion_name]['id']
     return champion_id
 
-def obtain_game_id(champion_id,account_id,game_id_list):
+def obtain_game_id(champion_id,account_id,game_id_list,key):
     champion_id=champion_id
     account_id=account_id
    # game_id_request=requests.get("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/{0}?queue=440&season=11&champion={1}&{2}".format(account_id,champion_id,key))
-    urllib.request.urlretrieve("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/{0}?queue=420&season=11&champion={1}&{2}".format(account_id,champion_id,key),"game_id.json")
+    urllib.request.urlretrieve("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/{0}?queue=420&season=11&champion={1}&api_key={2}".format(account_id,champion_id,key),"game_id.json")
     game_id_request_file=open("game_id.json","r")
     game_id_request_json=json.load(game_id_request_file)
 
@@ -33,7 +33,7 @@ def obtain_game_id(champion_id,account_id,game_id_list):
             game_id_list.append(game_id_request_json['matches'][a]['gameId'])
 
 
-    urllib.request.urlretrieve("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/{0}?queue=440&season=11&champion={1}&{2}".format(account_id,champion_id,key),"game_id.json")
+    urllib.request.urlretrieve("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/{0}?queue=440&season=11&champion={1}&api_key={2}".format(account_id,champion_id,key),"game_id.json")
     game_id_request_file=open("game_id.json","r")
     game_id_request_json=json.load(game_id_request_file)
 
@@ -41,10 +41,10 @@ def obtain_game_id(champion_id,account_id,game_id_list):
         if game_id_request_json['matches'][a]['champion'] == champion_id:
             game_id_list.append(game_id_request_json['matches'][a]['gameId'])
 
-def obtain_win(champion_id,game_state_list,game_id_list):
+def obtain_win(champion_id,game_state_list,game_id_list,key):
     champion_id=champion_id
     for b in range(len(game_id_list)):
-        game_state=requests.get("https://na1.api.riotgames.com/lol/match/v3/matches/{0}?{1}".format(game_id_list[b],key))
+        game_state=requests.get("https://na1.api.riotgames.com/lol/match/v3/matches/{0}?api_key={1}".format(game_id_list[b],key))
         game_state_json=game_state.json()
 
         for counter,x in enumerate(game_state_json["participants"]):
@@ -61,16 +61,17 @@ def obtain_ratio(game_state_list):
 
 
 
-def main(user_name,champion_name):
+def main(user_name,champion_name,key):
+    key=key
     game_id_list = []
     game_state_list = []
     user_name=user_name
     champion_name=champion_name
-    account_id=obtain_id(user_name)
-    champion_id=obtain_champion(champion_name)
-    obtain_game_id(champion_id,account_id,game_id_list)
+    account_id=obtain_id(user_name,key)
+    champion_id=obtain_champion(champion_name,key)
+    obtain_game_id(champion_id,account_id,game_id_list,key)
     print(game_id_list)
-    obtain_win(champion_id,game_state_list,game_id_list)
+    obtain_win(champion_id,game_state_list,game_id_list,key)
     print(game_state_list)
     ratio=obtain_ratio(game_state_list)
     print(ratio)

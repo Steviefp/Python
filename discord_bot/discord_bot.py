@@ -5,12 +5,15 @@ import league_requests
 import league_wr
 import praw
 import league_summoner_wr
+import python_json_write_to_file
+
 # zipcode and key are for requests for the weather api website
 zipcode,key='48164','05dc89dd3fd81bfcc393477e92a0e8d7'
 
 #start discord
 client=discord.Client()
-
+#riot api key
+key="RGAPI-550295db-18c3-4600-898c-c5e1d71f0e04"
 #timing vars
 timer=0
 timer_state=True
@@ -33,8 +36,15 @@ async def on_message(message):
     global timer
     global timer_state
 
+    #reddit
+    if message.content.startswith('!r'):
+        message_vars=[]
+        for x in message.content.split():
+            message_vars.append(x)
+        sub=reddit.subreddit(message_vars[1])
+        await client.send_message(message.channel,'http://www.reddit.com%s' % sub.url)
 
-    if message.content.startswith('!reddit'):
+    if message.content.startswith('!reddit random'):
         sub=reddit.random_subreddit()
         neat=0
 
@@ -42,9 +52,35 @@ async def on_message(message):
             neat=post.url
         await client.send_message(message.channel, neat)
 
+    if message.content.startswith('!reddit'):
+        message_vars=[]
+        for x in message.content.split():
+            message_vars.append(x)
 
-    if message.content.startswith('!play'):
-        await client.send_message(message.channel, '<@165698419820724224> ''<@125029977404997632> ' '<@166315074821029888>')
+        sub=reddit.subreddit(message_vars[2])
+
+        if message_vars[1]=='new':
+            for post in sub.new(limit=1):
+                sub_url=post.url
+            await client.send_message(message.channel,sub_url)
+        if message_vars[1]=='hot':
+            for post in sub.hot(limit=2):
+                if post != sub.sticky():
+                    sub_url=post.url
+            await client.send_message(message.channel,sub_url)
+        if message_vars[1]=='top':
+            for post in sub.top(limit=1):
+                sub_url=post.url
+            await client.send_message(message.channel,sub_url)
+        if message_vars[1]=='rising':
+            for post in sub.rising(limit=1):
+                sub_url=post.url
+            await client.send_message(message.channel,sub_url)
+        if message_vars[1]=='controversial':
+            for post in sub.controversial(limit=1):
+                sub_url=post.url
+            await client.send_message(message.channel,sub_url)
+
 #tyler stopwatch/timer for when he leaves ocmputer
     if message.content.startswith("!start"):
         await client.send_message(message.channel,"Timer Started")
@@ -89,10 +125,10 @@ async def on_message(message):
         user_input=message.content[6:]
         await client.send_message(message.channel,
                                   "http://na.op.gg/summoner/userName=%s"%user_input)
-
+# league of legends api stuff
     if message.content.startswith("!runes"):
         user_input=message.content[7:]
-        rune_list=league_requests.nice(user_input)
+        rune_list=league_requests.runes(user_input,key)
         await client.send_message(message.channel,"{0}, {1}, {2}, {3}, {4}, {5}".format(rune_list[0],rune_list[1],rune_list[2],rune_list[3],rune_list[4],rune_list[5]))
 
     if message.content.startswith("!wrchamp"):
@@ -100,21 +136,42 @@ async def on_message(message):
         for x in message.content.split():
             message_vars.append(x)
         print(message_vars)
-        ratio=league_wr.main(message_vars[1],message_vars[2])
+        ratio=league_wr.main(message_vars[1],message_vars[2],key)
         await client.send_message(message.channel,str(ratio))
 
     if message.content.startswith("!wr"):
         message_wr_vars=[]
         for x in message.content.split():
             message_wr_vars.append(x)
-        await client.send_message(message.channel,str(league_summoner_wr.summoner_wr(message_wr_vars[1]).win_rate))
+        await client.send_message(message.channel,str(league_summoner_wr.summoner_wr(message_wr_vars[1],key).win_rate))
+
+# json pretty upload file
+    if message.content.startswith("!json"):
+
+        message_json = []
+
+        for x in message.content.split():
+            message_json.append(x)
+
+        ree = python_json_write_to_file.json_write(message_json[1])
+
+        ree.file_write()
+
+
+        await client.send_file(message.channel,'json_bot.json')
+        ree.file_delete()
+
+# play
+    if message.content.startswith('!play'):
+        await client.send_message(message.channel, '<@165698419820724224> ''<@125029977404997632> ' '<@166315074821029888>')
+
 #help command for servers
     if message.content.startswith("!help"):
-        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !wrchamp !reddit !play")
+        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !wrchamp !reddit !reddit random !r (subreddt)*links subreddit* !json !play")
 
 
 
 # discord client run key
-discord_token=''
+discord_token=
 
 client.run(discord_token)

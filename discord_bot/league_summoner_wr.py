@@ -29,9 +29,9 @@ class summoner_wr:
                 self.wins+=1
 
 
-    def __init__(self,summoner_name):
+    def __init__(self,summoner_name,key):
         self.summoner_name = summoner_name
-        self.riot_key = 'RGAPI-18ad79b8-daac-4c0a-9a38-635784032428'
+        self.riot_key = key
         self.game_id_list=[]
         self.game_win=[]
         self.wins=0
@@ -54,5 +54,5 @@ class summoner_wr:
 
 
 
-test=summoner_wr("steviefnibberp")
+# test=summoner_wr("steviefnibberp",key)
 # 240859557

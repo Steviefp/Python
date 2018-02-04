@@ -1,11 +1,11 @@
 import requests
-def nice(user_name):
+def runes(user_name,key):
     # This is riot api key
-    key='api_key=RGAPI-0a0ed530-0062-4aea-a99d-945976ecfec4'
+    key=key
     # this is discord input
     user_name=user_name
     # I grab from riot api summoners id from summoner name which is the user_name
-    r=requests.get('https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/{0}?{1}'.format(user_name,key))
+    r=requests.get('https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/{0}?api_key={1}'.format(user_name,key))
     # ddragon runesReforged.json, this is my only way I could get rune names from rune id
     ddragon=requests.get("http://ddragon.leagueoflegends.com/cdn/8.2.1/data/en_US/runesReforged.json")
 
@@ -13,7 +13,7 @@ def nice(user_name):
     print(summoner_id)
 
     # I change my request to spectator after I get the summoner Id.
-    r=requests.get('https://na1.api.riotgames.com/lol/spectator/v3/active-games/by-summoner/{0}?{1}'.format(summoner_id,key))
+    r=requests.get('https://na1.api.riotgames.com/lol/spectator/v3/active-games/by-summoner/{0}?api_key={1}'.format(summoner_id,key))
 
     # From riot api
     # I use bunch of nested loops to get through all the json.
