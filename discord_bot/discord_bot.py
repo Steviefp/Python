@@ -20,8 +20,15 @@ timer=0
 timer_state=True
 
 #reddit bot
-reddit = praw.Reddit(client_id='6wT1IggpXMSgEw',
-                     client_secret='f90jNXEuumY9UfrrIWKD7X64j24',
+token=open("apikey.env","r")
+api_list=[]
+for x in token:
+    api_list.append(x.strip())
+token.close()
+
+
+reddit = praw.Reddit(client_id=api_list[0],
+                     client_secret=api_list[1],
                      user_agent='description i believe')
 
 
@@ -181,6 +188,8 @@ async def on_message(message):
 
 
 # discord client run key
-discord_token=''
+
+discord_token=api_list[2]
+
 
 client.run(discord_token)

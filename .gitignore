@@ -1,3 +1,4 @@
 
 *.xml
 .idea/Python.iml
+discord_bot/apikey.env
