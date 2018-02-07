@@ -151,7 +151,7 @@ async def on_message(message):
         for x in message.content.split():
             message_champ_vars.append(x)
         champ=champ_counter.countering_champ(message_champ_vars[1])
-        await client.send_message(message.channel,"1 {0}\n2 {1}\n3 {2}\n4 {3}\n5 {4}\n6 {5}".format(champ.champ_list[0],champ.champ_list[1],champ.champ_list[2],champ.champ_list[3],champ.champ_list[4],champ.champ_list[5]))
+        await client.send_message(message.channel, "\n".join("{}: {}".format(index, value) for index, value in enumerate(champ.champ_list, 1)))
 
 
 # json pretty upload file
