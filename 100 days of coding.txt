@@ -1,0 +1,44 @@
+day1 - started android development, made poop counter
+day2 - learned about python sockets and how shit they are
+day3 - learned about threading and trying to make chat program with 1 server 2 clients
+day4 - Learned more about threads, still not finish, manage to crash computer by making to many threads and have 100% cpu. learned more of the syntax of threads
+day5 - finished client.py/server.py, no quit feature. might start to work on c++ socket and thread
+day6- tried to add exit feature to server client... failed - learned about time module in python, started to work on android studio calculator
+day7- practiced more on android calculator, not doing the lame way. multiple issues, = button doesn't work, get operator will only work once because afterwards it will obtain a operator sign and not a number
+day8- did python during 3rd hour. time module, multiprocessing.
+day9- made calc with list (python),learned that .strip gets rid of white-space, made calc with file list, all made using classes
+day10- worked on making a runescape project. managed to get half of it done. in android studio i was trying to replicate android game i played, but just tried doing a really shitty job cause i only know really bad basics of java
+day11- Code academy java, gave up on project for now cause i don't know java as well as i thought. I couldn't figure out how to reassign variables. hopefully going to learn by trying code academy.
+day12- calc, and tic tac toe in java
+day13- made a string program that reversed, counted vowels, seen if it was a word that is spelled right backwards, worked with pygame.
+day14- made dreambot woodcutter with (longboi1234@gmail.com, password = d1234), finished tic tac toe on java, didn't want to finish the if win statements.
+day15- java hangman, almost done
+day16-explored java game coding, learend nothing :)))
+day17- java window builder, learend a little, similar to visual basic, but weird and harder for no reason :P
+day18-22:31 python requests, learned enumerate adds a counter to for loops ex: for x,y in enumerate(list):, made weather request program for zipcode, learned that for equations in python you have to use * with (), ex: 9/5*(229-273)+32
+day19-18:34 python server client, who can type it the fastest, similiar to the ::type challenge in runescape private servers. I finished the basics of it. I now want to implement user names.
+day20- added username functionality to typeServerClient, trying to add reset feature, struggling with getting it to send new word.
+day21-13:54, fixed spam, fixed loop not having correct word due to threading by using globals ( probably if class don't need to use globals), made random word text generator,finished project.
+day22- Made another discord bot that times tyler using !start and !stop, I want to focus on learning why I have to use @client.event and await, and see what asyncio does.
+day23- worked on discord bot added more features type !help
+day24- worked on riot api and linked opgg's 
+day25- Demo version of my rune api is finished and functioning. But it looks terrible and I would like to implement it a better way.
+
+day26- got some progress done for !wr discord bot, got accountid, championname to championid, and i got game id, next day
+day27- worked on winrate some more. mainly got it done and just had to import it to discordbot
+day28- found out that opgg fucked up something and riot api is right. Finished winrate project.
+
+
+day29- Work on winrate on people not champions for past 20 games, finished
+
+day30-  cleaned code a little, made a json indent formatter that saves to file. * STARTS PROGRAM, ask for file name, ask for links, closes program and makes file.
+day31- learned about git, i suck at it but learned somethings, learned a little about vim. git and github don't work together. they are different.
+
+--FEBURARY--
+1 day32- adding json thing to discord bot
+2 day33- added some reddit commands, like get first post in top, hot, new , controversial, rising, and r(subreddit)*links subreddit in discord* all put in my discord bot
+3 day34- set up laptop for ocding, sit up a git on it.
+4 day35- finishing bot champ counter
+5 day36- finished bot champ counter
+6 day37- debugged bot champ counter, added apikey.env and added it to .gitignore
+7 day38- #fix reddit bot issues on discord_bot
