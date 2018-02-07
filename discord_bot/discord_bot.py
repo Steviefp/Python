@@ -6,6 +6,7 @@ import league_wr
 import praw
 import league_summoner_wr
 import python_json_write_to_file
+import champ_counter
 
 # zipcode and key are for requests for the weather api website
 zipcode,key='48164','05dc89dd3fd81bfcc393477e92a0e8d7'
@@ -52,7 +53,7 @@ async def on_message(message):
             neat=post.url
         await client.send_message(message.channel, neat)
 
-    if message.content.startswith('!reddit'):
+    if message.content.startswith('!red'):
         message_vars=[]
         for x in message.content.split():
             message_vars.append(x)
@@ -145,6 +146,14 @@ async def on_message(message):
             message_wr_vars.append(x)
         await client.send_message(message.channel,str(league_summoner_wr.summoner_wr(message_wr_vars[1],key).win_rate))
 
+    if message.content.startswith("!counter"):
+        message_champ_vars=[]
+        for x in message.content.split():
+            message_champ_vars.append(x)
+        champ=champ_counter.countering_champ(message_champ_vars[1])
+        await client.send_message(message.channel,"1 {0}\n2 {1}\n3 {2}\n4 {3}\n5 {4}\n6 {5}".format(champ.champ_list[0],champ.champ_list[1],champ.champ_list[2],champ.champ_list[3],champ.champ_list[4],champ.champ_list[5]))
+
+
 # json pretty upload file
     if message.content.startswith("!json"):
 
@@ -162,16 +171,16 @@ async def on_message(message):
         ree.file_delete()
 
 # play
-    if message.content.startswith('!play'):
+    if message.content.startswith('!playing'):
         await client.send_message(message.channel, '<@165698419820724224> ''<@125029977404997632> ' '<@166315074821029888>')
 
 #help command for servers
     if message.content.startswith("!help"):
-        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !wrchamp !reddit !reddit random !r (subreddt)*links subreddit* !json !play")
+        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !wrchamp !red !reddit random !r (subreddt)*links subreddit* !json !play")
 
 
 
 # discord client run key
-discord_token=
+discord_token=''
 
 client.run(discord_token)
