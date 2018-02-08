@@ -41,4 +41,5 @@ day31- learned about git, i suck at it but learned somethings, learned a little 
 4 day35- finishing bot champ counter
 5 day36- finished bot champ counter
 6 day37- debugged bot champ counter, added apikey.env and added it to .gitignore
-7 day38- #fix reddit bot issues on discord_bot, also idea is probuilds webscrape for builds
+7 day38- tried working on full build probuilds thing, need javascript web scraper. idk how didn't get to finish
+8 day39- #fix reddit bot issues on discord_bot,
