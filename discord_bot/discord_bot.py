@@ -45,7 +45,7 @@ async def on_message(message):
     global timer_state
 
     #reddit
-    if message.content.startswith('!r'):
+    if message.content.startswith('!redsub'):
         message_vars=[]
         for x in message.content.split():
             message_vars.append(x)
@@ -60,7 +60,7 @@ async def on_message(message):
             neat=post.url
         await client.send_message(message.channel, neat)
 
-    if message.content.startswith('!red'):
+    if message.content.startswith('!redv'):
         message_vars=[]
         for x in message.content.split():
             message_vars.append(x)
