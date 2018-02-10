@@ -7,7 +7,7 @@ import praw
 import league_summoner_wr
 import python_json_write_to_file
 import champ_counter
-
+import probuild_scrape
 # zipcode and key are for requests for the weather api website
 zipcode,key='48164','05dc89dd3fd81bfcc393477e92a0e8d7'
 
@@ -160,6 +160,14 @@ async def on_message(message):
         champ=champ_counter.countering_champ(message_champ_vars[1])
         await client.send_message(message.channel, "\n".join("{}: {}".format(index, value) for index, value in enumerate(champ.champ_list, 1)))
 
+    if message.content.startswith("!build"):
+        message_champ_vars=[]
+        for x in message.content.split():
+            message_champ_vars.append(x)
+
+        champ_build=probuild_scrape.probuild_pop(message_champ_vars[1])
+        await client.send_message(message.channel, "\n".join("{}".format(index)for index in champ_build.item_list))
+
 
 # json pretty upload file
     if message.content.startswith("!json"):
@@ -183,7 +191,7 @@ async def on_message(message):
 
 #help command for servers
     if message.content.startswith("!help"):
-        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !wrchamp !red !reddit random !r (subreddt)*links subreddit* !json !play")
+        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !wrchamp !red !reddit random !r (subreddt)*links subreddit* !json !play !build")
 
 
 
