@@ -191,7 +191,7 @@ async def on_message(message):
 
 #help command for servers
     if message.content.startswith("!help"):
-        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !wrchamp !red !reddit random !r (subreddt)*links subreddit* !json !play !build")
+        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !wrchamp !redv !reddit random !redsub (subreddt)*links subreddit* !json !play !build")
 
 
 
