@@ -8,13 +8,14 @@ import league_summoner_wr
 import python_json_write_to_file
 import champ_counter
 import probuild_scrape
+import runes_champ_gg
 # zipcode and key are for requests for the weather api website
 zipcode,key='48164','05dc89dd3fd81bfcc393477e92a0e8d7'
 
 #start discord
 client=discord.Client()
 #riot api key
-key="RGAPI-550295db-18c3-4600-898c-c5e1d71f0e04"
+key="RGAPI-56ef8057-1436-4a40-88c6-fa79c4d5c300"
 #timing vars
 timer=0
 timer_state=True
@@ -134,9 +135,9 @@ async def on_message(message):
         await client.send_message(message.channel,
                                   "http://na.op.gg/summoner/userName=%s"%user_input)
 # league of legends api stuff
-    if message.content.startswith("!runes"):
-        user_input=message.content[7:]
-        rune_list=league_requests.runes(user_input,key)
+    if message.content.startswith("!user runes"):
+        message_vars=message.content[11:]
+        rune_list=league_requests.runes(message_vars,key)
         await client.send_message(message.channel,"{0}, {1}, {2}, {3}, {4}, {5}".format(rune_list[0],rune_list[1],rune_list[2],rune_list[3],rune_list[4],rune_list[5]))
 
     if message.content.startswith("!wrchamp"):
@@ -166,7 +167,25 @@ async def on_message(message):
             message_champ_vars.append(x)
 
         champ_build=probuild_scrape.probuild_pop(message_champ_vars[1])
+
         await client.send_message(message.channel, "\n".join("{}".format(index)for index in champ_build.item_list))
+
+    if message.content.startswith("!runes"):
+        message_vars=[]
+        for x in message.content.split():
+            message_vars.append(x)
+        runes_champs=runes_champ_gg.champsgg_runes(message_vars[1])
+        try:
+
+            if message_vars[2] == 'freq':
+                await client.send_message(message.channel,
+                                          '\n'.join('`{}`'.format(index) for index in runes_champs.runes_freq))
+            else:
+                await client.send_message(message.channel,
+                                          '\n'.join('`{}`'.format(index) for index in runes_champs.runes_win))
+        except IndexError:
+            await client.send_message(message.channel,
+                                      '\n'.join('`{}`'.format(index) for index in runes_champs.runes_win))
 
 
 # json pretty upload file
@@ -191,7 +210,7 @@ async def on_message(message):
 
 #help command for servers
     if message.content.startswith("!help"):
-        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !runes !wr !wrchamp !redv !reddit random !redsub (subreddt)*links subreddit* !json !play !build")
+        await client.send_message(message.channel,"Few commands such as: !start, !stop, !temp, !add, !sub, !times, !divide !opgg !user runes !wr !wrchamp !redv !reddit random !redsub (subreddt)*links subreddit* !json !play !build !runes(champ(freq:win))")
 
 
 
