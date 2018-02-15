@@ -45,5 +45,7 @@ day31- learned about git, i suck at it but learned somethings, learned a little 
 8 day39- resorted to not doing javascript webscraping because i didn't like the client mimic. But i managed to scrape what i could without javascript. !build annie, added to discord
 9 day40- Fixed reddit bot issues. I had overlapping names on commands such as !r and !reddit and !reddit random
 10 day41- added rune build to discord bot 
-11 day42-
-13 day43-
+11 day42- #time converter? est to cst?
+13 day43- #find lp and rank opgg
+14 day44-
+15 day45-

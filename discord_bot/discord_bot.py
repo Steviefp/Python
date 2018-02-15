@@ -9,13 +9,12 @@ import python_json_write_to_file
 import champ_counter
 import probuild_scrape
 import runes_champ_gg
-# zipcode and key are for requests for the weather api website
+# zipcode and api_list[3] are for requests for the weather api website
 zipcode,key='48164','05dc89dd3fd81bfcc393477e92a0e8d7'
 
 #start discord
 client=discord.Client()
-#riot api key
-key="RGAPI-56ef8057-1436-4a40-88c6-fa79c4d5c300"
+
 #timing vars
 timer=0
 timer_state=True
@@ -137,7 +136,7 @@ async def on_message(message):
 # league of legends api stuff
     if message.content.startswith("!user runes"):
         message_vars=message.content[11:]
-        rune_list=league_requests.runes(message_vars,key)
+        rune_list=league_requests.runes(message_vars,api_list[3])
         await client.send_message(message.channel,"{0}, {1}, {2}, {3}, {4}, {5}".format(rune_list[0],rune_list[1],rune_list[2],rune_list[3],rune_list[4],rune_list[5]))
 
     if message.content.startswith("!wrchamp"):
@@ -145,14 +144,14 @@ async def on_message(message):
         for x in message.content.split():
             message_vars.append(x)
         print(message_vars)
-        ratio=league_wr.main(message_vars[1],message_vars[2],key)
+        ratio=league_wr.main(message_vars[1],message_vars[2],api_list[3])
         await client.send_message(message.channel,str(ratio))
 
     if message.content.startswith("!wr"):
         message_wr_vars=[]
         for x in message.content.split():
             message_wr_vars.append(x)
-        await client.send_message(message.channel,str(league_summoner_wr.summoner_wr(message_wr_vars[1],key).win_rate))
+        await client.send_message(message.channel,str(league_summoner_wr.summoner_wr(message_wr_vars[1],api_list[3]).win_rate))
 
     if message.content.startswith("!counter"):
         message_champ_vars=[]
@@ -214,7 +213,7 @@ async def on_message(message):
 
 
 
-# discord client run key
+# discord client run api_list[3]
 
 discord_token=api_list[2]
 
